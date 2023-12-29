@@ -1,0 +1,40 @@
+class Room:
+    def __init__(self, number, capacity, price, is_reserved=False):
+        self.number = number
+        self.capacity = capacity
+        self.price = price
+        self.is_reserved = is_reserved
+
+class Hotel:
+    def __init__(self, name):
+        self.name = name
+        self.rooms = []
+
+    def add_room(self, room):
+        self.rooms.append(room)
+
+    def display_available_rooms(self):
+        available_rooms = [room.number for room in self.rooms if not room.is_reserved]
+        return available_rooms
+
+    def reserve_room(self, room_number):
+        for room in self.rooms:
+            if room.number == room_number and not room.is_reserved:
+                room.is_reserved = True
+                return f"Room {room_number} reserved successfully."
+
+        return f"Room {room_number} not available or already reserved."
+
+# Example usage:
+hotel = Hotel("Grand Hotel")
+
+room101 = Room(101, 2, 150)
+room102 = Room(102, 4, 250)
+
+hotel.add_room(room101)
+hotel.add_room(room102)
+
+print(hotel.display_available_rooms())
+
+reservation_result = hotel.reserve_room(101)
+print(reservation_result)
